@@ -54,6 +54,7 @@
     "redux-devtools-log-monitor": "^1.0.1",
     "redux-mock-store": "0.0.4",
     "webpack": "^1.9.10",
+    "webpack-cli": "^2.0.10",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.9.0",
     "webpack-hot-middleware": "^1.1.0",

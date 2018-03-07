@@ -72,7 +72,7 @@ export default class Chat extends Component {
     this.setState({ privateChannelModal: true, targetedUser: user });
   }
   closePrivateChannelModal(event) {
-    event.preventDefault();
+    if (typeof event !== 'undefined') event.preventDefault();
     this.setState({privateChannelModal: false});
   }
   handleSendDirectMessage() {

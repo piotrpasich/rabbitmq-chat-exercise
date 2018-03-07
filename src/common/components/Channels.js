@@ -28,11 +28,11 @@ export default class Channels extends Component {
     this.props.onClick(channel);
   }
   openAddChannelModal(event) {
-    event.preventDefault();
+    if (typeof event !== 'undefined') event.preventDefault();
     this.setState({addChannelModal: true});
   }
   closeAddChannelModal(event) {
-    event.preventDefault();
+    if (typeof event !== 'undefined') event.preventDefault();
     this.setState({addChannelModal: false});
   }
   handleModalChange(event) {
@@ -40,7 +40,7 @@ export default class Channels extends Component {
   }
   handleModalSubmit(event) {
     const { channels, dispatch, socket } = this.props;
-    event.preventDefault();
+    if (typeof event !== 'undefined') event.preventDefault();
     if (this.state.channelName.length < 1) {
       this.refs.channelName.getInputDOMNode().focus();
     }
@@ -69,11 +69,11 @@ export default class Channels extends Component {
     return 'success';
   }
   openMoreChannelsModal(event) {
-    event.preventDefault();
+    if (typeof event !== 'undefined') event.preventDefault();
     this.setState({moreChannelsModal: true});
   }
   closeMoreChannelsModal(event) {
-    event.preventDefault();
+    if (typeof event !== 'undefined') event.preventDefault();
     this.setState({moreChannelsModal: false});
   }
   createChannelWithinModal() {

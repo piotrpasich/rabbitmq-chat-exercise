@@ -22,7 +22,7 @@ export default class MessageComposer extends Component {
     const { user, socket, activeChannel} = this.props;
     const text = event.target.value.trim();
     if (event.which === 13) {
-      event.preventDefault();
+      if (typeof event !== 'undefined') event.preventDefault();
       var newMessage = {
         id: `${Date.now()}${uuid.v4()}`,
         channelID: this.props.activeChannel,

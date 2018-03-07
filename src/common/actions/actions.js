@@ -27,6 +27,7 @@ export function receiveRawChannel(channel) {
 }
 
 function addChannel(channel) {
+  console.log('ADD CHANNEL', channel)
   return {
     type: types.ADD_CHANNEL,
     channel
@@ -160,9 +161,13 @@ export function createChannel(channel) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(channel)})
-      .catch(error => {throw error}).then((val) =>
-      {},
-      () => {dispatch(addChannel(channel))})
+      .then(response => {
+        return response.json()
+      })
+      .then((channel) => {
+          dispatch(addChannel(channel))
+      })
+      .catch(error => {throw error})
   }
 }
 
