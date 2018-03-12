@@ -4,10 +4,9 @@ import {receiveAuth} from '../actions/authActions';
 import Chat from '../components/Chat';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import io from 'socket.io-client';
-
-const socket = io('', { path: '/api/chat' });
 const initialChannel = 'Lobby'; // NOTE: I hard coded this value for my example.  Change this as you see fit
+
+import socket from '../socket/socket'
 
 class ChatContainer extends Component {
   componentDidMount() {

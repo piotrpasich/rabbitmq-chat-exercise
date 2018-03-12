@@ -28,24 +28,30 @@ export default class Chat extends Component {
   componentDidMount() {
     const { socket, user, dispatch } = this.props;
     socket.emit('chat mounted', user);
-    socket.on('new bc message', msg =>
+    socket.on('new bc message', msg => {
+      console.log('new bc message')
       dispatch(actions.receiveRawMessage(msg))
-    );
-    socket.on('typing bc', user =>
+    });
+    socket.on('typing bc', user => {
+      console.log('typing bc')
       dispatch(actions.typing(user))
-    );
-    socket.on('stop typing bc', user =>
+    });
+    socket.on('stop typing bc', user => {
+      console.log('stop typing bc')
       dispatch(actions.stopTyping(user))
-    );
-    socket.on('new channel', channel =>
+    });
+    socket.on('new channel', channel => {
+      console.log('new channel')
       dispatch(actions.receiveRawChannel(channel))
-    );
-    socket.on('receive socket', socketID =>
+    });
+    socket.on('receive socket', socketID => {
+      console.log('receive socket')
       dispatch(authActions.receiveSocket(socketID))
-    );
-    socket.on('receive private channel', channel =>
+    });
+    socket.on('receive private channel', channel => {
+      console.log('receive private channel')
       dispatch(actions.receiveRawChannel(channel))
-    );
+    });
   }
   componentDidUpdate() {
     const messageList = this.refs.messageList;

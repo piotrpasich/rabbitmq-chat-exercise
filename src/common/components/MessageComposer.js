@@ -30,7 +30,7 @@ export default class MessageComposer extends Component {
         user: user,
         time: moment.utc().format('lll')
       };
-      socket.emit('new message', newMessage);
+      // socket.emit('new message', newMessage); //@papi
       socket.emit('stop typing', { user: user.username, channel: activeChannel });
       this.props.onSave(newMessage);
       this.setState({ text: '', typing: false });

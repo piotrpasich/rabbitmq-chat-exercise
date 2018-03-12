@@ -1,14 +1,16 @@
 var Channel = require('../models/Channel');
 var bodyparser = require('body-parser');
 
-module.exports = function(router) {
+var createChannel = require('../rabbit/createChannel')
+
+module.exports = function (router) {
   router.use(bodyparser.json());
 
   // deprecating this route since it just gets all channels
-  router.get('/channels', function(req, res) {
+  router.get('/channels', function (req, res) {
 
-    Channel.find({},{name: 1, id:1, _id:0}, function(err, data) {
-      if(err) {
+    Channel.find({}, {name: 1, id: 1, _id: 0}, function (err, data) {
+      if (err) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
       }
@@ -18,10 +20,16 @@ module.exports = function(router) {
   });
 
   // this route returns all channels including private channels for that user
-  router.get('/channels/:name', function(req, res) {
+  router.get('/channels/:name', function (req, res) {
 
-    Channel.find({ $or: [ {between: req.params.name}, {private: false } ] }, {name: 1, id:1, private: 1, between: 1, _id:0}, function(err, data) {
-      if(err) {
+    Channel.find({$or: [{between: req.params.name}, {private: false}]}, {
+      name: 1,
+      id: 1,
+      private: 1,
+      between: 1,
+      _id: 0
+    }, function (err, data) {
+      if (err) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
       }
@@ -31,7 +39,7 @@ module.exports = function(router) {
   })
 
   // post a new user to channel list db
-  router.post('/channels/new_channel', function(req, res) {
+  router.post('/channels/new_channel', function (req, res) {
     var newChannel = new Channel(req.body);
     newChannel.save(function (err, data) {
       if(err) {
@@ -39,6 +47,7 @@ module.exports = function(router) {
         return res.status(500).json({msg: 'internal server error'});
       }
 
+      createChannel(newChannel.name)
       res.json(data);
     });
   });

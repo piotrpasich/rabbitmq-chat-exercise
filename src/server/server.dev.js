@@ -21,6 +21,7 @@ import User from './models/User.js';
 import passport from 'passport';
 require('../../config/passport')(passport);
 import SocketIo from 'socket.io';
+
 const app = express();
 //set env vars
 process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
@@ -48,6 +49,7 @@ const channelRouter = express.Router();
 require('./routes/message_routes')(messageRouter);
 require('./routes/channel_routes')(channelRouter);
 require('./routes/user_routes')(usersRouter, passport);
+
 app.use('/api', messageRouter);
 app.use('/api', usersRouter);
 app.use('/api', channelRouter);
@@ -108,6 +110,10 @@ const server = app.listen(process.env.PORT, 'localhost', function(err) {
 
 const io = new SocketIo(server, {path: '/api/chat'})
 const socketEvents = require('./socketEvents')(io);
+
+import socket from '../common/socket/socket'
+const worker = require('./rabbit/worker')(socket)
+const fanoutWorker = require('./rabbit/fanoutWorker')(socket)
 
 function renderFullPage(html, initialState) {
   return `
